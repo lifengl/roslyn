@@ -1,4 +1,5 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
+#if NET461
 
 using System.Collections.Immutable;
 using System.IO;
@@ -111,7 +112,7 @@ namespace X
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestNamespaceAliases()
         {
             var text = @"
@@ -191,7 +192,7 @@ namespace X
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestTypeAliases1()
         {
             var text = @"
@@ -271,7 +272,7 @@ namespace X
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestTypeAliases2()
         {
             var text = @"
@@ -600,7 +601,7 @@ namespace M
             compilation.VerifyEmitDiagnostics();
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestExternAliases_ExplicitAndGlobal()
         {
             var dummySource = @"
@@ -672,7 +673,7 @@ class C { void M() { } }
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestExternAliasesInUsing()
         {
             CSharpCompilation libComp = CreateCompilation(@"
@@ -734,7 +735,7 @@ namespace N
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestNamespacesAndAliases()
         {
             CSharpCompilation dummyCompilation1 = CreateDummyCompilation("a");
@@ -897,7 +898,7 @@ namespace X
 </symbols>");
         }
 
-        [Fact, WorkItem(913022, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/913022")]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737"), WorkItem(913022, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/913022")]
         public void ReferenceWithMultipleAliases()
         {
             var source1 = @"
@@ -1031,7 +1032,7 @@ public class C
 ");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestPartialTypeInOneFile()
         {
             CSharpCompilation dummyCompilation1 = CreateDummyCompilation("a");
@@ -1201,7 +1202,7 @@ namespace X
 </symbols>", options: PdbValidationOptions.SkipConversionValidation); // TODO: https://github.com/dotnet/roslyn/issues/18004
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestPartialTypeInTwoFiles()
         {
             CSharpCompilation dummyCompilation1 = CreateDummyCompilation("a");
@@ -1797,7 +1798,7 @@ public class Test : IDisposable
 }", sequencePoints: "Test.Main");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestNestedType()
         {
             var libSource = @"
@@ -1846,7 +1847,7 @@ public class Test
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void TestVerbatimIdentifiers()
         {
             var source = @"
@@ -1899,7 +1900,7 @@ class Test { static void Main() { } }
         }
 
         [WorkItem(842479, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/842479")]
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void UsingExternAlias()
         {
             var libSource = "public class C { }";
@@ -1953,7 +1954,7 @@ namespace N
         }
 
         [WorkItem(842478, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/842478")]
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void AliasIncludingDynamic()
         {
             var source = @"
@@ -2030,7 +2031,7 @@ public class Test : IDisposable
         }
 
         [WorkItem(546754, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/546754")]
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void ArrayType()
         {
             var source1 = @"
@@ -2093,7 +2094,7 @@ public class C1
 </symbols>");
         }
 
-        [Fact, WorkItem(543615, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/543615")]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737"), WorkItem(543615, "http://vstfdevdiv:8080/DevDiv2/DevDiv/_workitems/edit/543615")]
         public void WRN_DebugFullNameTooLong()
         {
             var text = @"
@@ -2408,7 +2409,7 @@ class C
 </symbols>");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/dotnet/roslyn/issues/25737")]
         public void ImportedTypeWithUnknownBase()
         {
             var sourceLib1 = @"
@@ -2557,3 +2558,4 @@ ImportScope (index: 0x35, size: 36):
         }
     }
 }
+#endif

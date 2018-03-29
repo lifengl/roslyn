@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using RoslynCompletion = Microsoft.CodeAnalysis.Completion;
 using VSCompletion = Microsoft.VisualStudio.Language.Intellisense.Completion;
+using CompletionItem = Microsoft.CodeAnalysis.Completion.CompletionItem;
 
 namespace Microsoft.CodeAnalysis.Editor.Implementation.IntelliSense.Completion.Presentation
 {

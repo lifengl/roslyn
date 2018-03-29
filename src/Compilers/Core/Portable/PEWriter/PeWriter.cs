@@ -18,6 +18,7 @@ using Microsoft.CodeAnalysis.Emit;
 using Roslyn.Reflection.PortableExecutable;
 using static Microsoft.CodeAnalysis.SigningUtilities;
 using EmitContext = Microsoft.CodeAnalysis.Emit.EmitContext;
+using Microsoft.DiaSymReader;
 
 namespace Microsoft.Cci
 {
@@ -115,7 +116,7 @@ namespace Microsoft.Cci
 
             if (!debugEntryPointHandle.IsNil)
             {
-                nativePdbWriterOpt?.SetEntryPoint((uint)MetadataTokens.GetToken(debugEntryPointHandle));
+                nativePdbWriterOpt?.SetEntryPoint(MetadataTokens.GetToken(debugEntryPointHandle));
             }
 
             if (nativePdbWriterOpt != null)
@@ -229,7 +230,7 @@ namespace Microsoft.Cci
                         }
                         catch (Exception e) when (!(e is OperationCanceledException))
                         {
-                            throw new PdbWritingException(e);
+                            throw new SymUnmanagedWriterException(e.Message, e);
                         }
                     }
                 }
@@ -269,13 +270,7 @@ namespace Microsoft.Cci
             }
 
             var strongNameProvider = context.Module.CommonCompilation.Options.StrongNameProvider;
-
             var corFlags = properties.CorFlags;
-            if (privateKeyOpt != null)
-            {
-                Debug.Assert(strongNameProvider.Capability == SigningCapability.SignsPeBuilder);
-                corFlags |= CorFlags.StrongNameSigned;
-            }
 
             var peBuilder = new ExtendedPEBuilder(
                 peHeaderBuilder,
@@ -343,8 +338,9 @@ namespace Microsoft.Cci
 
             PatchModuleVersionIds(mvidFixup, mvidSectionFixup, mvidStringFixup, peContentId.Guid);
 
-            if (privateKeyOpt != null)
+            if (privateKeyOpt != null && corFlags.HasFlag(CorFlags.StrongNameSigned))
             {
+                Debug.Assert(strongNameProvider.Capability == SigningCapability.SignsPeBuilder);
                 strongNameProvider.SignPeBuilder(peBuilder, peBlob, privateKeyOpt.Value);
                 FixupChecksum(peBuilder, peBlob);
             }
