@@ -28,6 +28,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="VBCodeStyleResources.resx">
       <CustomToolNamespace>Microsoft.CodeAnalysis.VisualBasic.VBCodeStyleResources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
